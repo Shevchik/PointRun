@@ -1,0 +1,18 @@
+name: PointRun
+main: pointrun.PointRun
+softdepend: [WorldEdit, Vault]
+version: 1.0
+author: _Shevchik_
+commands:
+  pointrunsetup:
+    description: PointRun arena setup commands
+    aliases: prsetup
+    usage: Command is invalid
+  pointrun:
+    description: PointRun game commands
+    aliases: pr
+    usage: Use /pr help to show all commands available in plugin
+  pointrunconsole:
+    description: PointRun console commands
+    aliases: prconsole
+    usage: Command is invalid
