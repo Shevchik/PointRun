@@ -17,6 +17,7 @@
 
 package pointrun.arena.handlers;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -38,6 +39,16 @@ public class GameHandler {
 		this.plugin = plugin;
 		this.arena = arena;
 		count = arena.getStructureManager().getCountdown();
+	}
+
+	private HashMap<String, PlayerPoints> playerpoints = new HashMap<String, PlayerPoints>();
+
+	public Integer getPlayerPoints(String name) {
+		return playerpoints.get(name).getPoints();
+	}
+
+	public void removePlayerPoints(String name) {
+		playerpoints.remove(name);
 	}
 
 	// arena leave handler
@@ -135,6 +146,9 @@ public class GameHandler {
 				kits.giveKit(kitnames[rnd.nextInt(kitnames.length)], player);
 			}
 		}
+		for (Player player : arena.getPlayersManager().getPlayers()) {
+			playerpoints.put(player.getName(), new PlayerPoints());
+		}
 		timelimit = arena.getStructureManager().getTimeLimit() * 20; // timelimit is in ticks
 		arenahandler = Bukkit.getScheduler().scheduleSyncRepeatingTask(
 			plugin,
@@ -188,9 +202,28 @@ public class GameHandler {
 		Location plloc = player.getLocation();
 		Location plufloc = plloc.clone().add(0, -1, 0);
 		// remove block under player feet
-		arena.getStructureManager().getGameZone().destroyBlock(plufloc, arena);
+		int points = arena.getStructureManager().getGameZone().destroyBlock(plufloc, arena);
+		if (points != -1) {
+			playerpoints.get(player.getName()).addPoints(points);
+		}
 		// check for win
 		if (arena.getPlayersManager().getCount() == 1) {
+			//calculate winner
+			Player winner = player;
+			int max = playerpoints.get(player.getName()).getPoints();
+			for (Player spectator : arena.getPlayersManager().getSpectatorsCopy()) {
+				int spoints = playerpoints.get(spectator.getName()).getPoints();
+				if (spoints > max) {
+					max = spoints;
+					winner = spectator;
+				}
+			}
+			if (winner == player) {
+				arena.getPlayerHandler().leaveWinner(winner, Messages.playerwontoplayer);
+			} else {
+				arena.getPlayerHandler().leavePlayer(player, Messages.playerlosttoplayer, Messages.playerlosttoothers);
+				arena.getPlayerHandler().leaveWinner(winner, Messages.playerwontoplayer);
+			}
 			stopArena();
 			return;
 		}
@@ -231,6 +264,20 @@ public class GameHandler {
 			},
 			delay
 		);
+	}
+
+	private static class PlayerPoints {
+
+		private int points = 0;
+
+		protected void addPoints(int points) {
+			this.points += points;
+		}
+
+		protected int getPoints() {
+			return points;
+		}
+
 	}
 
 }

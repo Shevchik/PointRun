@@ -37,7 +37,7 @@ public class GameZone {
 	private HashSet<Block> blockstodestroy = new HashSet<Block>();
 
 	private final int SCAN_DEPTH = 1;
-	public void destroyBlock(Location loc, final Arena arena) {
+	public int destroyBlock(Location loc, final Arena arena) {
 		int y = loc.getBlockY();
 		Block block = null;
 		for (int i = 0; i <= SCAN_DEPTH; i++) {
@@ -65,6 +65,7 @@ public class GameZone {
 				);
 			}
 		}
+		return -1;
 	}
 
 	private static double PLAYER_BOUNDINGBOX_ADD = 0.3;
