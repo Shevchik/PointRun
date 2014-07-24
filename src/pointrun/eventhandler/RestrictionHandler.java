@@ -41,7 +41,7 @@ public class RestrictionHandler implements Listener {
 	}
 
 	private HashSet<String> allowedcommands = new HashSet<String>(
-		Arrays.asList("/tntrun leave", "/tntrun vote", "/tr leave", "/tr vote")
+		Arrays.asList("/pointrun leave", "/pointrun vote", "/pr leave", "/pr vote")
 	);
 
 	// player should not be able to issue any commands besides /tr leave and /tr vote while in arena
@@ -54,7 +54,7 @@ public class RestrictionHandler implements Listener {
 			return;
 		}
 		// allow use any command if player has permission
-		if (player.hasPermission("tntrun.cmdblockbypass")) {
+		if (player.hasPermission("pointrun.cmdblockbypass")) {
 			return;
 		}
 		// now check command

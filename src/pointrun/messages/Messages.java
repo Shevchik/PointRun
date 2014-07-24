@@ -53,7 +53,7 @@ public class Messages {
 	public static String playerwontoplayer = "&6You won the game";
 	public static String playerlosttoplayer = "&6You lost the game";
 	public static String playerlosttoothers = "&6Player {PLAYER} lost the game";
-	public static String playerwonbroadcast = "&9[TNTRun] &a{PLAYER}&r won the game on arena &c{ARENA}";
+	public static String playerwonbroadcast = "&9[PointRun] &a{PLAYER}&r won the game on arena &c{ARENA}";
 	public static String playerrewardmessage = "&6You have been rewarded: {REWARD}";
 
 	public static void sendMessage(Player player, String message) {

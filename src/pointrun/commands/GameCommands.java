@@ -44,11 +44,11 @@ public class GameCommands implements CommandExecutor {
 		// handle commands
 		// help command
 		if (args.length == 1 && args[0].equalsIgnoreCase("help")) {
-			sender.sendMessage("/tr lobby - teleport to lobby");
-			sender.sendMessage("/tr list - list all arenas");
-			sender.sendMessage("/tr join {arena} - join arena");
-			sender.sendMessage("/tr leave - leave current arena");
-			sender.sendMessage("/tr vote - vote for current arena start");
+			sender.sendMessage("/pr lobby - teleport to lobby");
+			sender.sendMessage("/pr list - list all arenas");
+			sender.sendMessage("/pr join {arena} - join arena");
+			sender.sendMessage("/pr leave - leave current arena");
+			sender.sendMessage("/pr vote - vote for current arena start");
 			return true;
 		} else if (args.length == 1 && args[0].equalsIgnoreCase("lobby")) {
 			if (plugin.globallobby.isLobbyLocationSet()) {
@@ -80,7 +80,7 @@ public class GameCommands implements CommandExecutor {
 		}
 		// join arena
 		else if (args.length == 2 && args[0].equalsIgnoreCase("join")) {
-			if (player.hasPermission("tntrun.onlysignjoin")) {
+			if (player.hasPermission("pointrun.onlysignjoin")) {
 				player.sendMessage("You can join the game only by using a sign");
 				return true;
 			}
