@@ -17,6 +17,7 @@
 
 package pointrun.arena.structure;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -33,6 +34,14 @@ import pointrun.PointRun;
 import pointrun.arena.Arena;
 
 public class GameZone {
+
+	private HashMap<Material, Integer> materialworth = new HashMap<Material, Integer>(); {
+		materialworth.put(Material.DIAMOND_ORE, 6);
+		materialworth.put(Material.EMERALD_ORE, 5);
+		materialworth.put(Material.IRON_ORE, 4);
+		materialworth.put(Material.GOLD_ORE, 3);
+		materialworth.put(Material.LAPIS_ORE, 2);
+	}
 
 	private HashSet<Block> blockstodestroy = new HashSet<Block>();
 
@@ -63,6 +72,9 @@ public class GameZone {
 						}
 					}, arena.getStructureManager().getGameLevelDestroyDelay()
 				);
+				if (materialworth.containsKey(fblock.getType())) {
+					return materialworth.get(fblock.getType());
+				}
 			}
 		}
 		return -1;
