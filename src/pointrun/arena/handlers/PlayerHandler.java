@@ -205,7 +205,7 @@ public class PlayerHandler {
 			arena.getStructureManager().getRewards().rewardPlayer(player);
 		}
 		plugin.pdata.restorePlayerGameMode(player);
-		// restore location ot teleport to lobby
+		// restore location or teleport to lobby
 		if (arena.getStructureManager().getTeleportDestination() == TeleportDestination.LOBBY && plugin.globallobby.isLobbyLocationWorldAvailable()) {
 			player.teleport(plugin.globallobby.getLobbyLocation());
 			plugin.pdata.clearPlayerLocation(player);
