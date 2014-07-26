@@ -28,6 +28,7 @@ import pointrun.arena.Arena;
 import pointrun.arena.structure.StructureManager.TeleportDestination;
 import pointrun.bars.Bars;
 import pointrun.messages.Messages;
+import pointrun.scoreboards.Scoreboards;
 
 public class PlayerHandler {
 
@@ -186,6 +187,8 @@ public class PlayerHandler {
 		}
 		// remove player points
 		arena.getGameHandler().removePlayerPoints(player.getName());
+		// remove scoreboard
+		Scoreboards.unregisterScoreboard(player);
 		// remove vote
 		votes.remove(player.getName());
 		// remove bar

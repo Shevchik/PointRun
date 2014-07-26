@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -30,6 +31,7 @@ import pointrun.arena.Arena;
 import pointrun.arena.structure.Kits;
 import pointrun.bars.Bars;
 import pointrun.messages.Messages;
+import pointrun.scoreboards.Scoreboards;
 
 public class GameHandler {
 
@@ -133,13 +135,17 @@ public class GameHandler {
 	Random rnd = new Random();
 
 	public void startArena() {
+		//set running
 		arena.getStatusManager().setRunning(true);
+		//send messages
 		String message = Messages.arenastarted;
 		message = message.replace("{TIMELIMIT}", String.valueOf(arena.getStructureManager().getTimeLimit()));
 		for (Player player : arena.getPlayersManager().getPlayers()) {
 			Messages.sendMessage(player, message);
 		}
+		//update signs
 		plugin.signEditor.modifySigns(arena.getArenaName());
+		//give kits
 		Kits kits = arena.getStructureManager().getKits();
 		if (kits.getKits().size() > 0) {
 			String[] kitnames = kits.getKits().toArray(new String[kits.getKits().size()]);
@@ -147,10 +153,13 @@ public class GameHandler {
 				kits.giveKit(kitnames[rnd.nextInt(kitnames.length)], player);
 			}
 		}
+		//add points and register scoreboard
 		for (Player player : arena.getPlayersManager().getPlayers()) {
 			playerpoints.put(player.getName(), new PlayerPoints());
+			Scoreboards.registerScoreboard(player, ChatColor.BLUE+"Points");
 		}
 		timelimit = arena.getStructureManager().getTimeLimit() * 20; // timelimit is in ticks
+		//start handler
 		arenahandler = Bukkit.getScheduler().scheduleSyncRepeatingTask(
 			plugin,
 			new Runnable() {
@@ -175,6 +184,8 @@ public class GameHandler {
 					for (Player player : arena.getPlayersManager().getPlayersCopy()) {
 						// update bar
 						Bars.setBar(player, Bars.playing, arena.getPlayersManager().getCount(), timelimit / 20, timelimit * 5 / arena.getStructureManager().getTimeLimit());
+						// update scoreboard
+						Scoreboards.updateScoreboard(player, playerpoints);
 						// handle player
 						handlePlayer(player);
 					}
@@ -271,18 +282,24 @@ public class GameHandler {
 		);
 	}
 
-	private static class PlayerPoints {
+	public static class PlayerPoints {
 
 		private int points = 0;
 
-		protected void addPoints(int points) {
+		public void removePoints(int points) {
+			this.points -= points;
+		}
+
+		public void addPoints(int points) {
 			this.points += points;
 		}
 
-		protected int getPoints() {
+		public int getPoints() {
 			return points;
 		}
 
 	}
+
+	
 
 }
