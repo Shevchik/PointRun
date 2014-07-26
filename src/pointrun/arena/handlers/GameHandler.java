@@ -166,12 +166,7 @@ public class GameHandler {
 				@Override
 				public void run() {
 					if (timelimit < 0) {
-						for (Player player : arena.getPlayersManager().getPlayersCopy()) {
-							// kick player
-							arena.getPlayerHandler().leavePlayer(player,Messages.arenatimeout, "");
-						}
-						// stop arena
-						stopArena();
+						finishGame();
 						return;
 					}
 					// stop arena if player count is 0 (just in case)
@@ -224,24 +219,7 @@ public class GameHandler {
 		}
 		// check for win
 		if (arena.getPlayersManager().getCount() == 1) {
-			//calculate winner
-			Player winner = player;
-			int max = playerpoints.get(player.getName()).getPoints();
-			for (Player spectator : arena.getPlayersManager().getSpectatorsCopy()) {
-				int spoints = playerpoints.get(spectator.getName()).getPoints();
-				if (spoints > max) {
-					max = spoints;
-					winner = spectator;
-				}
-			}
-			if (winner == player) {
-				arena.getPlayerHandler().leaveWinner(winner, Messages.playerwontoplayer);
-			} else {
-				arena.getPlayerHandler().leavePlayer(player, Messages.playerlosttoplayer, Messages.playerlosttoothers);
-				arena.getPlayerHandler().leaveWinner(winner, Messages.playerwontoplayer);
-			}
-			stopArena();
-			return;
+			finishGame();
 		}
 		// check for lose
 		if (arena.getStructureManager().getLoseLevel().isLooseLocation(plloc)) {
@@ -249,6 +227,25 @@ public class GameHandler {
 			arena.getPlayerHandler().spectatePlayer(player, Messages.playerlosttoplayer, Messages.playerlosttoothers);
 			return;
 		}
+	}
+
+	private void finishGame() {
+		//calculate winner
+		Player winner = arena.getPlayersManager().getPlayers().iterator().next();
+		int max = playerpoints.get(winner.getName()).getPoints();
+		for (Player spectator : arena.getPlayersManager().getSpectatorsCopy()) {
+			int spoints = playerpoints.get(spectator.getName()).getPoints();
+			if (spoints > max) {
+				max = spoints;
+				winner = spectator;
+			}
+		}
+		arena.getPlayerHandler().leaveWinner(winner, Messages.playerwontoplayer);
+		for (Player player : arena.getPlayersManager().getPlayersCopy()) {
+			arena.getPlayerHandler().leavePlayer(player, Messages.playerlosttoplayer, "");
+		}
+		stopArena();
+		return;
 	}
 
 	@SuppressWarnings("unused")
