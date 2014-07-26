@@ -220,6 +220,7 @@ public class GameHandler {
 		// check for win
 		if (arena.getPlayersManager().getCount() == 1) {
 			finishGame();
+			return;
 		}
 		// check for lose
 		if (arena.getStructureManager().getLoseLevel().isLooseLocation(plloc)) {
@@ -240,12 +241,13 @@ public class GameHandler {
 				winner = spectator;
 			}
 		}
+		//kick other players
 		arena.getPlayerHandler().leaveWinner(winner, Messages.playerwontoplayer);
 		for (Player player : arena.getPlayersManager().getPlayersCopy()) {
 			arena.getPlayerHandler().leavePlayer(player, Messages.playerlosttoplayer, "");
 		}
+		//stop arena;
 		stopArena();
-		return;
 	}
 
 	@SuppressWarnings("unused")
