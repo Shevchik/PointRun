@@ -22,6 +22,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import pointrun.PointRun;
@@ -205,6 +206,7 @@ public class GameHandler {
 		int points = arena.getStructureManager().getGameZone().destroyBlock(plufloc, arena);
 		if (points != -1) {
 			playerpoints.get(player.getName()).addPoints(points);
+			player.playSound(plloc, Sound.ORB_PICKUP, 1, 1);
 		}
 		// check for win
 		if (arena.getPlayersManager().getCount() == 1) {
