@@ -38,9 +38,10 @@ public class GameZone {
 	private HashMap<Material, Integer> materialworth = new HashMap<Material, Integer>(); {
 		materialworth.put(Material.DIAMOND_ORE, 6);
 		materialworth.put(Material.EMERALD_ORE, 5);
-		materialworth.put(Material.IRON_ORE, 4);
-		materialworth.put(Material.GOLD_ORE, 3);
-		materialworth.put(Material.LAPIS_ORE, 2);
+		materialworth.put(Material.REDSTONE, 4);
+		materialworth.put(Material.IRON_ORE, 3);
+		materialworth.put(Material.GOLD_ORE, 2);
+		materialworth.put(Material.LAPIS_ORE, 1);
 	}
 
 	private HashSet<Block> blockstodestroy = new HashSet<Block>();
