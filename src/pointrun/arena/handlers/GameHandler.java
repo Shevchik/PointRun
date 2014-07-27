@@ -241,8 +241,10 @@ public class GameHandler {
 				winner = spectator;
 			}
 		}
-		//kick other players
+		//kick winner
 		arena.getPlayerHandler().leaveWinner(winner, Messages.playerwontoplayer);
+		broadcastWin(winner);
+		//kick other players
 		for (Player player : arena.getPlayersManager().getPlayersCopy()) {
 			arena.getPlayerHandler().leavePlayer(player, Messages.playerlosttoplayer, "");
 		}
@@ -250,7 +252,6 @@ public class GameHandler {
 		stopArena();
 	}
 
-	@SuppressWarnings("unused")
 	private void broadcastWin(Player player) {
 		String message = Messages.playerwonbroadcast;
 		message = message.replace("{PLAYER}", player.getName());
