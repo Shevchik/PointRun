@@ -18,6 +18,7 @@
 package pointrun.arena.handlers;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -226,21 +227,26 @@ public class GameHandler {
 
 	private void finishGame() {
 		//calculate winner
-		Player winner = arena.getPlayersManager().getPlayers().iterator().next();
-		int max = playerpoints.get(winner.getName()).getPoints();
-		for (Player spectator : arena.getPlayersManager().getSpectatorsCopy()) {
-			int spoints = playerpoints.get(spectator.getName()).getPoints();
-			if (spoints > max) {
-				max = spoints;
-				winner = spectator;
+		HashSet<Player> allplayers = new HashSet<Player>(); 
+		allplayers.addAll(arena.getPlayersManager().getPlayers());
+		allplayers.addAll(arena.getPlayersManager().getSpectatorsCopy());
+		if (!allplayers.isEmpty()) {
+			Player winner = allplayers.iterator().next();
+			int max = playerpoints.get(winner.getName()).getPoints();
+			for (Player spectator : allplayers) {
+				int spoints = playerpoints.get(spectator.getName()).getPoints();
+				if (spoints > max) {
+					max = spoints;
+					winner = spectator;
+				}
 			}
-		}
-		//kick winner
-		arena.getPlayerHandler().leaveWinner(winner, Messages.playerwontoplayer);
-		broadcastWin(winner);
-		//kick other players
-		for (Player player : arena.getPlayersManager().getPlayersCopy()) {
-			arena.getPlayerHandler().leavePlayer(player, Messages.playerlosttoplayer, "");
+			//kick winner
+			arena.getPlayerHandler().leaveWinner(winner, Messages.playerwontoplayer);
+			broadcastWin(winner);
+			//kick other players
+			for (Player player : arena.getPlayersManager().getPlayersCopy()) {
+				arena.getPlayerHandler().leavePlayer(player, Messages.playerlosttoplayer, "");
+			}
 		}
 		//stop arena;
 		stopArena();
