@@ -184,6 +184,13 @@ public class GameHandler {
 						// handle player
 						handlePlayer(player);
 					}
+					// update bars and scoreboard for spectators too
+					for (Player player : arena.getPlayersManager().getSpectators()) {
+						// update bar
+						Bars.setBar(player, Bars.playing, arena.getPlayersManager().getCount(), timelimit / 20, timelimit * 5 / arena.getStructureManager().getTimeLimit());
+						// update scoreboard
+						Scoreboards.updateScoreboard(player, playerpoints);
+					}
 					// decrease timelimit
 					timelimit--;
 				}
