@@ -31,7 +31,6 @@ import pointrun.commands.setup.arena.AddKit;
 import pointrun.commands.setup.arena.CreateArena;
 import pointrun.commands.setup.arena.DeleteArena;
 import pointrun.commands.setup.arena.DeleteKit;
-import pointrun.commands.setup.arena.DeleteSpectatorSpawn;
 import pointrun.commands.setup.arena.DisableArena;
 import pointrun.commands.setup.arena.EnableArena;
 import pointrun.commands.setup.arena.FinishArena;
@@ -80,7 +79,6 @@ public class SetupCommandsHandler implements CommandExecutor {
 		commandHandlers.put("setloselevel", new SetLoseLevel(plugin, plselection));
 		commandHandlers.put("setspawn", new SetSpawn(plugin));
 		commandHandlers.put("setspectate", new SetSpectatorSpawn(plugin));
-		commandHandlers.put("delspectate", new DeleteSpectatorSpawn(plugin));
 		commandHandlers.put("setmaxplayers", new SetMaxPlayers(plugin));
 		commandHandlers.put("setminplayers", new SetMinPlayers(plugin));
 		commandHandlers.put("setvotepercent", new SetVotePercent(plugin));
