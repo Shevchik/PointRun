@@ -169,10 +169,9 @@ public class GameHandler {
 						finishGame();
 						return;
 					}
-					// stop arena if player count is 0 (just in case)
+					// finish game if player count is 0
 					if (arena.getPlayersManager().getCount() == 0) {
-						// stop arena
-						stopArena();
+						finishGame();
 						return;
 					}
 					// handle players
@@ -216,11 +215,6 @@ public class GameHandler {
 		if (points != -1) {
 			playerpoints.get(player.getName()).addPoints(points);
 			player.playSound(plloc, Sound.ORB_PICKUP, 1, 1);
-		}
-		// check for win
-		if (arena.getPlayersManager().getCount() == 1) {
-			finishGame();
-			return;
 		}
 		// check for lose
 		if (arena.getStructureManager().getLoseLevel().isLooseLocation(plloc)) {
