@@ -39,6 +39,7 @@ public class GameZone {
 		materialworth.put(Material.DIAMOND_ORE, 6);
 		materialworth.put(Material.EMERALD_ORE, 5);
 		materialworth.put(Material.REDSTONE, 4);
+		materialworth.put(Material.GLOWING_REDSTONE_ORE, 4);
 		materialworth.put(Material.IRON_ORE, 3);
 		materialworth.put(Material.GOLD_ORE, 2);
 		materialworth.put(Material.LAPIS_ORE, 1);
