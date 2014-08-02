@@ -166,13 +166,16 @@ public class GameHandler {
 			new Runnable() {
 				@Override
 				public void run() {
-					if (timelimit < 0) {
-						finishGame();
-						return;
-					}
 					// finish game if player count is 0
 					if (arena.getPlayersManager().getCount() == 0) {
 						finishGame();
+						return;
+					}
+					// move everyone to spectators if time is out
+					if (timelimit < 0) {
+						for (Player player : arena.getPlayersManager().getPlayersCopy()) {
+							arena.getPlayerHandler().spectatePlayer(player, Messages.arenatimeout, "");
+						}
 						return;
 					}
 					// handle players
@@ -200,10 +203,7 @@ public class GameHandler {
 	}
 
 	public void stopArena() {
-		for (Player player : arena.getPlayersManager().getPlayersCopy()) {
-			arena.getPlayerHandler().leavePlayer(player, "", "");
-		}
-		for (Player player : arena.getPlayersManager().getSpectatorsCopy()) {
+		for (Player player : arena.getPlayersManager().getAllParticipantsCopy()) {
 			arena.getPlayerHandler().leavePlayer(player, "", "");
 		}
 		arena.getStatusManager().setRunning(false);
@@ -255,8 +255,6 @@ public class GameHandler {
 				arena.getPlayerHandler().leavePlayer(player, Messages.playerlosttoplayer, "");
 			}
 		}
-		//stop arena;
-		stopArena();
 	}
 
 	private void broadcastWin(Player player) {
