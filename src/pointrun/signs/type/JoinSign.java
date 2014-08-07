@@ -41,7 +41,7 @@ public class JoinSign implements SignType {
 	public void handleCreation(SignChangeEvent e) {
 		final Arena arena = plugin.amanager.getArenaByName(e.getLine(2));
 		if (arena != null) {
-			e.setLine(0, ChatColor.BLUE + "[TNTRun]");
+			e.setLine(0, ChatColor.BLUE + "[PointRun]");
 			e.getPlayer().sendMessage("Sign succesfully created");
 			plugin.signEditor.addSign(e.getBlock(), arena.getArenaName());
 			Bukkit.getScheduler().scheduleSyncDelayedTask(plugin,

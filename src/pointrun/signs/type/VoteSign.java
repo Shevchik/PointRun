@@ -36,7 +36,7 @@ public class VoteSign implements SignType {
 
 	@Override
 	public void handleCreation(SignChangeEvent e) {
-		e.setLine(0, ChatColor.BLUE + "[TNTRun]");
+		e.setLine(0, ChatColor.BLUE + "[PointRun]");
 		e.getPlayer().sendMessage("Sign succesfully created");
 	}
 

@@ -51,7 +51,7 @@ public class SignHandler implements Listener {
 	public void onTNTRunSignCreate(SignChangeEvent e) {
 		Player player = e.getPlayer();
 		if (e.getLine(0).equalsIgnoreCase("[PointRun]") || e.getLine(0).equalsIgnoreCase(ChatColor.BLUE+"[PointRun]")) {
-			if (!player.hasPermission("tntrun.setup")) {
+			if (!player.hasPermission("pointrun.setup")) {
 				Messages.sendMessage(player, Messages.nopermission);
 				e.setCancelled(true);
 				e.getBlock().breakNaturally();
@@ -89,7 +89,7 @@ public class SignHandler implements Listener {
 		Player player = e.getPlayer();
 		Sign sign = (Sign) e.getBlock().getState();
 		if (sign.getLine(0).equalsIgnoreCase(ChatColor.BLUE + "[PointRun]")) {
-			if (!player.hasPermission("tntrun.setup")) {
+			if (!player.hasPermission("pointrun.setup")) {
 				Messages.sendMessage(player, Messages.nopermission);
 				e.setCancelled(true);
 				return;
