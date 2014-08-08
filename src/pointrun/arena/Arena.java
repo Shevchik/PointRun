@@ -33,8 +33,8 @@ public class Arena {
 	public Arena(String name, PointRun plugin) {
 		arenaname = name;
 		this.plugin = plugin;
-		arenagh = new GameHandler(plugin, this);
-		arenaph = new PlayerHandler(plugin, this);
+		arenagh = new GameHandler(this);
+		arenaph = new PlayerHandler(this);
 		arenafile = new File(plugin.getDataFolder() + File.separator + "arenas" + File.separator + arenaname + ".yml");
 	}
 

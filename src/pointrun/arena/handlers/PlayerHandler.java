@@ -23,7 +23,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import pointrun.PointRun;
 import pointrun.arena.Arena;
 import pointrun.arena.structure.StructureManager.TeleportDestination;
 import pointrun.bars.Bars;
@@ -32,11 +31,9 @@ import pointrun.scoreboards.Scoreboards;
 
 public class PlayerHandler {
 
-	private PointRun plugin;
 	private Arena arena;
 
-	public PlayerHandler(PointRun plugin, Arena arena) {
-		this.plugin = plugin;
+	public PlayerHandler(Arena arena) {
 		this.arena = arena;
 	}
 
@@ -73,20 +70,20 @@ public class PlayerHandler {
 	@SuppressWarnings("deprecation")
 	public void spawnPlayer(final Player player, String msgtoplayer, String msgtoarenaplayers) {
 		// teleport player to arena
-		plugin.pdata.storePlayerLocation(player);
+		arena.plugin.pdata.storePlayerLocation(player);
 		player.teleport(arena.getStructureManager().getSpawnPoint());
 		// set player visible to everyone
 		for (Player aplayer : Bukkit.getOnlinePlayers()) {
 			aplayer.showPlayer(player);
 		}
 		// change player status
-		plugin.pdata.storePlayerGameMode(player);
+		arena.plugin.pdata.storePlayerGameMode(player);
 		player.setFlying(false);
 		player.setAllowFlight(false);
-		plugin.pdata.storePlayerInventory(player);
-		plugin.pdata.storePlayerArmor(player);
-		plugin.pdata.storePlayerPotionEffects(player);
-		plugin.pdata.storePlayerHunger(player);
+		arena.plugin.pdata.storePlayerInventory(player);
+		arena.plugin.pdata.storePlayerArmor(player);
+		arena.plugin.pdata.storePlayerPotionEffects(player);
+		arena.plugin.pdata.storePlayerHunger(player);
 		// update inventory
 		player.updateInventory();
 		// send message to player
@@ -103,7 +100,7 @@ public class PlayerHandler {
 		message = message.replace("{COUNT}", String.valueOf(arena.getPlayersManager().getPlayersCount()));
 		Messages.sendMessage(player, message);
 		// modify signs
-		plugin.signEditor.modifySigns(arena.getArenaName());
+		arena.plugin.signEditor.modifySigns(arena.getArenaName());
 		// modify bars
 		if (!arena.getStatusManager().isArenaStarting()) {
 			for (Player oplayer : arena.getPlayersManager().getPlayers()) {
@@ -135,7 +132,7 @@ public class PlayerHandler {
 		// send message to player
 		Messages.sendMessage(player, msgtoplayer);
 		// modify signs
-		plugin.signEditor.modifySigns(arena.getArenaName());
+		arena.plugin.signEditor.modifySigns(arena.getArenaName());
 		// send message to other players and update bars
 		for (Player oplayer : arena.getPlayersManager().getAllParticipantsCopy()) {
 			msgtoarenaplayers = msgtoarenaplayers.replace("{PLAYER}", player.getName());
@@ -157,7 +154,7 @@ public class PlayerHandler {
 		// send message to player
 		Messages.sendMessage(player, msgtoplayer);
 		// modify signs
-		plugin.signEditor.modifySigns(arena.getArenaName());
+		arena.plugin.signEditor.modifySigns(arena.getArenaName());
 		// send message to other players and update bars
 		for (Player oplayer : arena.getPlayersManager().getAllParticipantsCopy()) {
 			msgtoarenaplayers = msgtoarenaplayers.replace("{PLAYER}", player.getName());
@@ -174,7 +171,7 @@ public class PlayerHandler {
 		// send message to player
 		Messages.sendMessage(player, msgtoplayer);
 		// modify signs
-		plugin.signEditor.modifySigns(arena.getArenaName());
+		arena.plugin.signEditor.modifySigns(arena.getArenaName());
 	}
 
 	@SuppressWarnings("deprecation")
@@ -199,21 +196,21 @@ public class PlayerHandler {
 		// remove player on arena data
 		arena.getPlayersManager().removePlayer(player);
 		// restore player status
-		plugin.pdata.restorePlayerHunger(player);
-		plugin.pdata.restorePlayerPotionEffects(player);
-		plugin.pdata.restorePlayerArmor(player);
-		plugin.pdata.restorePlayerInventory(player);
+		arena.plugin.pdata.restorePlayerHunger(player);
+		arena.plugin.pdata.restorePlayerPotionEffects(player);
+		arena.plugin.pdata.restorePlayerArmor(player);
+		arena.plugin.pdata.restorePlayerInventory(player);
 		// reward player before restoring gamemode if player is winner
 		if (winner) {
 			arena.getStructureManager().getRewards().rewardPlayer(player);
 		}
-		plugin.pdata.restorePlayerGameMode(player);
+		arena.plugin.pdata.restorePlayerGameMode(player);
 		// restore location or teleport to lobby
-		if (arena.getStructureManager().getTeleportDestination() == TeleportDestination.LOBBY && plugin.globallobby.isLobbyLocationWorldAvailable()) {
-			player.teleport(plugin.globallobby.getLobbyLocation());
-			plugin.pdata.clearPlayerLocation(player);
+		if (arena.getStructureManager().getTeleportDestination() == TeleportDestination.LOBBY && arena.plugin.globallobby.isLobbyLocationWorldAvailable()) {
+			player.teleport(arena.plugin.globallobby.getLobbyLocation());
+			arena.plugin.pdata.clearPlayerLocation(player);
 		} else {
-			plugin.pdata.restorePlayerLocation(player);
+			arena.plugin.pdata.restorePlayerLocation(player);
 		}
 		// update inventory
 		player.updateInventory();
