@@ -44,7 +44,7 @@ public class PlayerStatusHandler implements Listener {
 	public void onPlayerDamage(EntityDamageEvent e) {
 		if (e.getEntity() instanceof Player) {
 			Player player = (Player) e.getEntity();
-			Arena arena = plugin.amanager.getPlayerArena(player.getName());
+			Arena arena = plugin.amanager.getPlayerArena(player);
 			if (arena != null) {
 				if (e.getCause() == DamageCause.FALL) {
 					e.setCancelled(true);
@@ -74,7 +74,7 @@ public class PlayerStatusHandler implements Listener {
 		if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
 			Player player = (Player) e.getEntity();
 			Player damager = (Player) e.getDamager();
-			Arena arena = plugin.amanager.getPlayerArena(player.getName());
+			Arena arena = plugin.amanager.getPlayerArena(player);
 			if (arena != null) {
 				if (arena.getPlayersManager().isSpectator(player) || arena.getPlayersManager().isSpectator(damager)) {
 					e.setCancelled(true);
@@ -88,7 +88,7 @@ public class PlayerStatusHandler implements Listener {
 	public void onPlayerDamage(FoodLevelChangeEvent e) {
 		if (e.getEntity() instanceof Player) {
 			Player player = (Player) e.getEntity();
-			if (plugin.amanager.getPlayerArena(player.getName()) != null) {
+			if (plugin.amanager.getPlayerArena(player) != null) {
 				e.setCancelled(true);
 			}
 		}

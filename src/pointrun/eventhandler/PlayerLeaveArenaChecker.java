@@ -40,7 +40,7 @@ public class PlayerLeaveArenaChecker implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onPlayerQuitEvent(PlayerQuitEvent e) {
 		Player player = e.getPlayer();
-		Arena arena = plugin.amanager.getPlayerArena(player.getName());
+		Arena arena = plugin.amanager.getPlayerArena(player);
 		// ignore if player is not in arena
 		if (arena == null) {
 			return;
@@ -52,7 +52,7 @@ public class PlayerLeaveArenaChecker implements Listener {
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onPlayerDeathEvent(PlayerDeathEvent e) {
 		Player player = e.getEntity();
-		Arena arena = plugin.amanager.getPlayerArena(player.getName());
+		Arena arena = plugin.amanager.getPlayerArena(player);
 		// ignore if player is not in arena
 		if (arena == null) {
 			return;

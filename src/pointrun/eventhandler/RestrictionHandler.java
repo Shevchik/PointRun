@@ -44,11 +44,11 @@ public class RestrictionHandler implements Listener {
 		Arrays.asList("/pointrun leave", "/pointrun vote", "/pr leave", "/pr vote")
 	);
 
-	// player should not be able to issue any commands besides /tr leave and /tr vote while in arena
+	// player should not be able to issue any commands besides /pr leave and /pr vote while in arena
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onPlayerCommand(PlayerCommandPreprocessEvent e) {
 		Player player = e.getPlayer();
-		Arena arena = plugin.amanager.getPlayerArena(player.getName());
+		Arena arena = plugin.amanager.getPlayerArena(player);
 		// ignore if player is not in arena
 		if (arena == null) {
 			return;
@@ -67,7 +67,7 @@ public class RestrictionHandler implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onPlayerBlockBreak(BlockBreakEvent e) {
 		Player player = e.getPlayer();
-		Arena arena = plugin.amanager.getPlayerArena(player.getName());
+		Arena arena = plugin.amanager.getPlayerArena(player);
 		// ignore if player is not in arena
 		if (arena == null) {
 			return;
@@ -79,7 +79,7 @@ public class RestrictionHandler implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onPlayerBlockPlace(BlockPlaceEvent e) {
 		Player player = e.getPlayer();
-		Arena arena = plugin.amanager.getPlayerArena(player.getName());
+		Arena arena = plugin.amanager.getPlayerArena(player);
 		// ignore if player is not in arena
 		if (arena == null) {
 			return;
@@ -91,7 +91,7 @@ public class RestrictionHandler implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onPlayerItemDrop(PlayerDropItemEvent e) {
 		Player player = e.getPlayer();
-		Arena arena = plugin.amanager.getPlayerArena(player.getName());
+		Arena arena = plugin.amanager.getPlayerArena(player);
 		// ignore if player is not in arena
 		if (arena == null) {
 			return;

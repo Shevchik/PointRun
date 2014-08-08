@@ -42,7 +42,7 @@ public class VoteSign implements SignType {
 
 	@Override
 	public void handleClick(PlayerInteractEvent e) {
-		Arena arena = plugin.amanager.getPlayerArena(e.getPlayer().getName());
+		Arena arena = plugin.amanager.getPlayerArena(e.getPlayer());
 		if (arena != null) {
 			if (arena.getPlayerHandler().vote(e.getPlayer())) {
 				Messages.sendMessage(e.getPlayer(), Messages.playervotedforstart);

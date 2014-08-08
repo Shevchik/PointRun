@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
+import org.bukkit.entity.Player;
+
 import pointrun.arena.Arena;
 
 public class ArenasManager {
@@ -47,9 +49,9 @@ public class ArenasManager {
 		return arenanames.get(name);
 	}
 
-	public Arena getPlayerArena(String name) {
+	public Arena getPlayerArena(Player player) {
 		for (Arena arena : arenanames.values()) {
-			if (arena.getPlayersManager().isInArena(name)) {
+			if (arena.getPlayersManager().isInArena(player)) {
 				return arena;
 			}
 		}

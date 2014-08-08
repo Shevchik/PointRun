@@ -98,7 +98,7 @@ public class GameCommands implements CommandExecutor {
 		}
 		// leave arena
 		else if (args.length == 1 && args[0].equalsIgnoreCase("leave")) {
-			Arena arena = plugin.amanager.getPlayerArena(player.getName());
+			Arena arena = plugin.amanager.getPlayerArena(player);
 			if (arena != null) {
 				arena.getPlayerHandler().leavePlayer(player, Messages.playerlefttoplayer, Messages.playerlefttoothers);
 				return true;
@@ -109,7 +109,7 @@ public class GameCommands implements CommandExecutor {
 		}
 		// vote
 		else if (args.length == 1 && args[0].equalsIgnoreCase("vote")) {
-			Arena arena = plugin.amanager.getPlayerArena(player.getName());
+			Arena arena = plugin.amanager.getPlayerArena(player);
 			if (arena != null) {
 				if (arena.getPlayerHandler().vote(player)) {
 					Messages.sendMessage(player, Messages.playervotedforstart);

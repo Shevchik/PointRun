@@ -42,7 +42,7 @@ public class LeaveSign implements SignType {
 
 	@Override
 	public void handleClick(PlayerInteractEvent e) {
-		Arena arena = plugin.amanager.getPlayerArena(e.getPlayer().getName());
+		Arena arena = plugin.amanager.getPlayerArena(e.getPlayer());
 		if (arena != null) {
 			arena.getPlayerHandler().leavePlayer(e.getPlayer(), Messages.playerlefttoplayer, Messages.playerlefttoothers);
 			e.setCancelled(true);

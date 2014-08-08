@@ -29,8 +29,8 @@ public class PlayersManager {
 	private HashMap<String, Player> players = new HashMap<String, Player>();
 	private HashMap<String, Player> spectators = new HashMap<String, Player>();
 
-	public boolean isInArena(String name) {
-		return players.containsKey(name) || spectators.containsKey(name);
+	public boolean isInArena(Player player) {
+		return players.containsKey(player.getName()) || spectators.containsKey(player.getName());
 	}
 
 	public HashSet<Player> getAllParticipantsCopy() {
