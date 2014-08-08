@@ -189,7 +189,7 @@ public class PlayerHandler {
 			player.setFlying(false);
 		}
 		// remove player points
-		arena.getGameHandler().removePlayerPoints(player.getName());
+		arena.getGameHandler().removePlayerPoints(player);
 		// remove scoreboard
 		Scoreboards.unregisterScoreboard(player);
 		// remove vote

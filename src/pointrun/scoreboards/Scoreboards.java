@@ -26,8 +26,6 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import pointrun.arena.handlers.GameHandler.PlayerPoints;
-
 public class Scoreboards {
 
 	public static void registerScoreboard(Player player, String title) {
@@ -38,15 +36,15 @@ public class Scoreboards {
         player.setScoreboard(board);
 	}
 
-	public static void updateScoreboard(Player player, HashMap<String, PlayerPoints> map) {
+	public static void updateScoreboard(Player player, HashMap<String, Integer> map) {
 		for (String oldentry : player.getScoreboard().getEntries()) {
 			if (!map.containsKey(oldentry)) {
 				player.getScoreboard().resetScores(oldentry);
 			}
 		}
 		Objective objective = player.getScoreboard().getObjective(DisplaySlot.SIDEBAR);
-		for (Entry<String, PlayerPoints> entry : map.entrySet()) {
-			objective.getScore(limitString(entry.getKey())).setScore(entry.getValue().getPoints());
+		for (Entry<String, Integer> entry : map.entrySet()) {
+			objective.getScore(limitString(entry.getKey())).setScore(entry.getValue());
 		}
 	}
 

@@ -19,6 +19,7 @@ package pointrun.arena.handlers;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -47,12 +48,12 @@ public class GameHandler {
 
 	private HashMap<String, PlayerPoints> playerpoints = new HashMap<String, PlayerPoints>();
 
-	public Integer getPlayerPoints(String name) {
-		return playerpoints.get(name).getPoints();
+	public Integer getPlayerPoints(Player player) {
+		return playerpoints.get(player.getName()).getPoints();
 	}
 
-	public void removePlayerPoints(String name) {
-		playerpoints.remove(name);
+	public void removePlayerPoints(Player player) {
+		playerpoints.remove(player.getName());
 	}
 
 	// arena leave handler
@@ -156,7 +157,7 @@ public class GameHandler {
 		}
 		//add points and register scoreboard
 		for (Player player : arena.getPlayersManager().getPlayers()) {
-			playerpoints.put(player.getName(), new PlayerPoints());
+			playerpoints.put(player.getName(), new PlayerPoints(player));
 			Scoreboards.registerScoreboard(player, ChatColor.BLUE+"Points");
 		}
 		timelimit = arena.getStructureManager().getTimeLimit() * 20; // timelimit is in ticks
@@ -178,12 +179,17 @@ public class GameHandler {
 						}
 						return;
 					}
+					HashMap<String, Integer> sboardmap = new HashMap<String, Integer>();
+					for (Entry<String, PlayerPoints> entry : playerpoints.entrySet()) {
+						Player player = entry.getValue().getPlayer();
+						sboardmap.put((arena.getPlayersManager().isSpectator(player) ? ChatColor.RED : ChatColor.GREEN) + player.getName(), entry.getValue().getPoints());
+					}
 					// handle players
 					for (Player player : arena.getPlayersManager().getPlayersCopy()) {
 						// update bar
 						Bars.setBar(player, Bars.playing, arena.getPlayersManager().getPlayersCount(), timelimit / 20, timelimit * 5 / arena.getStructureManager().getTimeLimit());
 						// update scoreboard
-						Scoreboards.updateScoreboard(player, playerpoints);
+						Scoreboards.updateScoreboard(player, sboardmap);
 						// handle player
 						handlePlayer(player);
 					}
@@ -192,7 +198,7 @@ public class GameHandler {
 						// update bar
 						Bars.setBar(player, Bars.playing, arena.getPlayersManager().getPlayersCount(), timelimit / 20, timelimit * 5 / arena.getStructureManager().getTimeLimit());
 						// update scoreboard
-						Scoreboards.updateScoreboard(player, playerpoints);
+						Scoreboards.updateScoreboard(player, sboardmap);
 					}
 					// decrease timelimit
 					timelimit--;
@@ -287,6 +293,16 @@ public class GameHandler {
 	}
 
 	public static class PlayerPoints {
+
+		private Player player;
+
+		public PlayerPoints(Player player) {
+			this.player = player;
+		}
+
+		public Player getPlayer() {
+			return player;
+		}
 
 		private int points = 0;
 
