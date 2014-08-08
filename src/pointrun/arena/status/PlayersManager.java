@@ -21,16 +21,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
 public class PlayersManager {
 
-	private HashMap<String, Player> players = new HashMap<String, Player>();
-	private HashMap<String, Player> spectators = new HashMap<String, Player>();
+	private HashMap<UUID, Player> players = new HashMap<UUID, Player>();
+	private HashMap<UUID, Player> spectators = new HashMap<UUID, Player>();
 
 	public boolean isInArena(Player player) {
-		return players.containsKey(player.getName()) || spectators.containsKey(player.getName());
+		return players.containsKey(player.getUniqueId()) || spectators.containsKey(player.getUniqueId());
 	}
 
 	public HashSet<Player> getAllParticipantsCopy() {
@@ -53,23 +54,23 @@ public class PlayersManager {
 	}
 
 	public void addPlayer(Player player) {
-		players.put(player.getName(), player);
+		players.put(player.getUniqueId(), player);
 	}
 
 	public void removePlayer(Player player) {
-		players.remove(player.getName());
+		players.remove(player.getUniqueId());
 	}
 
 	public boolean isSpectator(Player player) {
-		return spectators.containsKey(player.getName());
+		return spectators.containsKey(player.getUniqueId());
 	}
 
 	public void addSpectator(Player player) {
-		spectators.put(player.getName(), player);
+		spectators.put(player.getUniqueId(), player);
 	}
 
 	public void removeSpecator(Player player) {
-		spectators.remove(player.getName());
+		spectators.remove(player.getUniqueId());
 	}
 
 	public Collection<Player> getSpectators() {

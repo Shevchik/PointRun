@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -46,14 +47,14 @@ public class GameHandler {
 		count = arena.getStructureManager().getCountdown();
 	}
 
-	private HashMap<String, PlayerPoints> playerpoints = new HashMap<String, PlayerPoints>();
+	private HashMap<UUID, PlayerPoints> playerpoints = new HashMap<UUID, PlayerPoints>();
 
 	public Integer getPlayerPoints(Player player) {
-		return playerpoints.get(player.getName()).getPoints();
+		return playerpoints.get(player.getUniqueId()).getPoints();
 	}
 
 	public void removePlayerPoints(Player player) {
-		playerpoints.remove(player.getName());
+		playerpoints.remove(player.getUniqueId());
 	}
 
 	// arena leave handler
@@ -157,7 +158,7 @@ public class GameHandler {
 		}
 		//add points and register scoreboard
 		for (Player player : arena.getPlayersManager().getPlayers()) {
-			playerpoints.put(player.getName(), new PlayerPoints(player));
+			playerpoints.put(player.getUniqueId(), new PlayerPoints(player));
 			Scoreboards.registerScoreboard(player, ChatColor.BLUE+"Points");
 		}
 		timelimit = arena.getStructureManager().getTimeLimit() * 20; // timelimit is in ticks
@@ -180,7 +181,7 @@ public class GameHandler {
 						return;
 					}
 					HashMap<String, Integer> sboardmap = new HashMap<String, Integer>();
-					for (Entry<String, PlayerPoints> entry : playerpoints.entrySet()) {
+					for (Entry<UUID, PlayerPoints> entry : playerpoints.entrySet()) {
 						Player player = entry.getValue().getPlayer();
 						sboardmap.put((arena.getPlayersManager().isSpectator(player) ? ChatColor.RED : ChatColor.GREEN) + player.getName(), entry.getValue().getPoints());
 					}
