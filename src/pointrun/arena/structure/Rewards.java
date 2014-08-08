@@ -124,6 +124,7 @@ public class Rewards {
 	public void saveToConfig(FileConfiguration config) {
 		config.set("reward.money", moneyreward);
 		config.set("reward.items", itemrewards);
+		config.set("reward.commands", commands);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -133,6 +134,7 @@ public class Rewards {
 		if (obj != null) {
 			itemrewards = (List<ItemStack>) obj;
 		}
+		commands = config.getStringList("reward.commands");
 	}
 
 }
