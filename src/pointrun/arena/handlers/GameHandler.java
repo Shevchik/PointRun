@@ -221,7 +221,7 @@ public class GameHandler {
 		// remove block under player feet
 		int points = arena.getStructureManager().getGameZone().destroyBlock(plufloc, arena);
 		if (points != -1) {
-			playerpoints.get(player.getName()).addPoints(points);
+			playerpoints.get(player.getName()).modifyPoints(points);
 			player.playSound(plloc, Sound.ORB_PICKUP, 1, 1);
 		}
 		// check for lose
@@ -234,9 +234,7 @@ public class GameHandler {
 
 	private void finishGame() {
 		//calculate winner
-		HashSet<Player> allplayers = new HashSet<Player>(); 
-		allplayers.addAll(arena.getPlayersManager().getPlayers());
-		allplayers.addAll(arena.getPlayersManager().getSpectatorsCopy());
+		HashSet<Player> allplayers = arena.getPlayersManager().getAllParticipantsCopy();
 		if (!allplayers.isEmpty()) {
 			Player winner = allplayers.iterator().next();
 			int max = playerpoints.get(winner.getName()).getPoints();
@@ -292,11 +290,7 @@ public class GameHandler {
 
 		private int points = 0;
 
-		public void removePoints(int points) {
-			this.points -= points;
-		}
-
-		public void addPoints(int points) {
+		public void modifyPoints(int points) {
 			this.points += points;
 		}
 
