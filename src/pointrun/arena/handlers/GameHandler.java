@@ -255,6 +255,7 @@ public class GameHandler {
 				arena.getPlayerHandler().leavePlayer(player, Messages.playerlosttoplayer, "");
 			}
 		}
+		stopArena();
 	}
 
 	private void broadcastWin(Player player) {
