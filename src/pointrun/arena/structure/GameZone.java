@@ -45,6 +45,10 @@ public class GameZone {
 		materialworth.put(Material.LAPIS_ORE, 1);
 	}
 
+	public void addMaterialWorlth(Material mat, int worth) {
+		materialworth.put(mat, worth);
+	}
+
 	private HashSet<Block> blockstodestroy = new HashSet<Block>();
 
 	private final int SCAN_DEPTH = 1;
