@@ -69,7 +69,7 @@ public class PlayersManager {
 	}
 
 	public void removeSpecator(Player player) {
-		spectators.remove(player);
+		spectators.remove(player.getName());
 	}
 
 	public Collection<Player> getSpectators() {
