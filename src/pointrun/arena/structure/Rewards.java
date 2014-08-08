@@ -26,6 +26,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
@@ -56,6 +57,12 @@ public class Rewards {
 		return moneyreward;
 	}
 
+	private List<String> commands = new ArrayList<String>();
+
+	public List<String> getCommandsToExecute() {
+		return commands;
+	}
+
 	public void setRewards(ItemStack[] rewards) {
 		itemrewards.clear();
 		for (ItemStack reward : rewards) {
@@ -67,6 +74,14 @@ public class Rewards {
 
 	public void setRewards(int money) {
 		moneyreward = money;
+	}
+
+	public void addCommandToExecute(String command) {
+		commands.add(command);
+	}
+
+	public void clearCommandsToExceute() {
+		commands.clear();
 	}
 
 	public void rewardPlayer(Player player) {
@@ -89,6 +104,13 @@ public class Rewards {
 		rewardmessage = Messages.playerrewardmessage.replace("{REWARD}", rewardmessage);
 		if (!rewardmessage.isEmpty()) {
 			Messages.sendMessage(player, rewardmessage);
+		}
+		for (String command : commands) {
+			command = command.replace("{playerName}", player.getName());
+			command = command.replace("{playerUUID}", player.getUniqueId().toString());
+			ServerCommandEvent event = new ServerCommandEvent(Bukkit.getConsoleSender(), command);
+			Bukkit.getPluginManager().callEvent(event);
+			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), event.getCommand());
 		}
 	}
 
