@@ -62,7 +62,7 @@ public class PlayerHandler {
 			Messages.sendMessage(player, Messages.arenavehicle);
 			return false;
 		}
-		if (arena.getPlayersManager().getCount() == arena.getStructureManager().getMaxPlayers()) {
+		if (arena.getPlayersManager().getPlayersCount() == arena.getStructureManager().getMaxPlayers()) {
 			Messages.sendMessage(player, Messages.limitreached);
 			return false;
 		}
@@ -97,21 +97,21 @@ public class PlayerHandler {
 			Messages.sendMessage(oplayer, msgtoarenaplayers);
 		}
 		// set player on arena data
-		arena.getPlayersManager().add(player);
+		arena.getPlayersManager().addPlayer(player);
 		// send message about arena player count
 		String message = Messages.playerscountinarena;
-		message = message.replace("{COUNT}", String.valueOf(arena.getPlayersManager().getCount()));
+		message = message.replace("{COUNT}", String.valueOf(arena.getPlayersManager().getPlayersCount()));
 		Messages.sendMessage(player, message);
 		// modify signs
 		plugin.signEditor.modifySigns(arena.getArenaName());
 		// modify bars
 		if (!arena.getStatusManager().isArenaStarting()) {
 			for (Player oplayer : arena.getPlayersManager().getPlayers()) {
-				Bars.setBar(oplayer, Bars.waiting, arena.getPlayersManager().getCount(), 0, arena.getPlayersManager().getCount() * 100 / arena.getStructureManager().getMinPlayers());
+				Bars.setBar(oplayer, Bars.waiting, arena.getPlayersManager().getPlayersCount(), 0, arena.getPlayersManager().getPlayersCount() * 100 / arena.getStructureManager().getMinPlayers());
 			}
 		}
 		// check for game start
-		if (!arena.getStatusManager().isArenaStarting() && arena.getPlayersManager().getCount() == arena.getStructureManager().getMinPlayers()) {
+		if (!arena.getStatusManager().isArenaStarting() && arena.getPlayersManager().getPlayersCount() == arena.getStructureManager().getMinPlayers()) {
 			arena.getGameHandler().runArenaCountdown();
 		}
 	}
@@ -119,7 +119,7 @@ public class PlayerHandler {
 	// move to spectators
 	public void spectatePlayer(Player player, String msgtoplayer, String msgtoarenaplayers) {
 		// remove from players
-		arena.getPlayersManager().remove(player);
+		arena.getPlayersManager().removePlayer(player);
 		// teleport to spectators spawn
 		player.teleport(arena.getStructureManager().getSpectatorSpawn());
 		// clear inventory
@@ -147,7 +147,7 @@ public class PlayerHandler {
 
 	// remove player from arena
 	public void leavePlayer(Player player, String msgtoplayer, String msgtoarenaplayers) {
-		boolean spectator = arena.getPlayersManager().isSpectator(player.getName());
+		boolean spectator = arena.getPlayersManager().isSpectator(player);
 		// remove player from arena and restore his state
 		removePlayerFromArenaAndRestoreState(player, false);
 		// should not send messages and other things when player is a spectator
@@ -163,7 +163,7 @@ public class PlayerHandler {
 			msgtoarenaplayers = msgtoarenaplayers.replace("{PLAYER}", player.getName());
 			Messages.sendMessage(oplayer, msgtoarenaplayers);
 			if (!arena.getStatusManager().isArenaStarting() && !arena.getStatusManager().isArenaRunning()) {
-				Bars.setBar(oplayer, Bars.waiting, arena.getPlayersManager().getCount(), 0, arena.getPlayersManager().getCount() * 100 / arena.getStructureManager().getMinPlayers());
+				Bars.setBar(oplayer, Bars.waiting, arena.getPlayersManager().getPlayersCount(), 0, arena.getPlayersManager().getPlayersCount() * 100 / arena.getStructureManager().getMinPlayers());
 			}
 		}
 	}
@@ -180,8 +180,8 @@ public class PlayerHandler {
 	@SuppressWarnings("deprecation")
 	private void removePlayerFromArenaAndRestoreState(Player player, boolean winner) {
 		// reset spectators
-		if (arena.getPlayersManager().isSpectator(player.getName())) {
-			arena.getPlayersManager().removeSpecator(player.getName());
+		if (arena.getPlayersManager().isSpectator(player)) {
+			arena.getPlayersManager().removeSpecator(player);
 			for (Player oplayer : Bukkit.getOnlinePlayers()) {
 				oplayer.showPlayer(player);
 			}
@@ -197,7 +197,7 @@ public class PlayerHandler {
 		// remove bar
 		Bars.removeBar(player);
 		// remove player on arena data
-		arena.getPlayersManager().remove(player);
+		arena.getPlayersManager().removePlayer(player);
 		// restore player status
 		plugin.pdata.restorePlayerHunger(player);
 		plugin.pdata.restorePlayerPotionEffects(player);
@@ -225,7 +225,7 @@ public class PlayerHandler {
 	public boolean vote(Player player) {
 		if (!votes.contains(player.getName())) {
 			votes.add(player.getName());
-			if (!arena.getStatusManager().isArenaStarting() && arena.getPlayersManager().getCount() > 1 && votes.size() >= arena.getPlayersManager().getCount() * arena.getStructureManager().getVotePercent()) {
+			if (!arena.getStatusManager().isArenaStarting() && arena.getPlayersManager().getPlayersCount() > 1 && votes.size() >= arena.getPlayersManager().getPlayersCount() * arena.getStructureManager().getVotePercent()) {
 				arena.getGameHandler().runArenaCountdown();
 			}
 			return true;

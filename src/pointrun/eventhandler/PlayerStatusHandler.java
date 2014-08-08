@@ -76,7 +76,7 @@ public class PlayerStatusHandler implements Listener {
 			Player damager = (Player) e.getDamager();
 			Arena arena = plugin.amanager.getPlayerArena(player.getName());
 			if (arena != null) {
-				if (arena.getPlayersManager().isSpectator(player.getName()) || arena.getPlayersManager().isSpectator(damager.getName())) {
+				if (arena.getPlayersManager().isSpectator(player) || arena.getPlayersManager().isSpectator(damager)) {
 					e.setCancelled(true);
 				}
 			}

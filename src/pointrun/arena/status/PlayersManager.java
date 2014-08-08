@@ -33,15 +33,15 @@ public class PlayersManager {
 		return players.containsKey(name) || spectators.containsKey(name);
 	}
 
-	public int getCount() {
-		return players.size();
-	}
-
 	public HashSet<Player> getAllParticipantsCopy() {
 		HashSet<Player> p = new HashSet<Player>();
 		p.addAll(players.values());
 		p.addAll(spectators.values());
 		return p;
+	}
+
+	public int getPlayersCount() {
+		return players.size();
 	}
 
 	public Collection<Player> getPlayers() {
@@ -52,24 +52,24 @@ public class PlayersManager {
 		return new HashSet<Player>(players.values());
 	}
 
-	public void add(Player player) {
+	public void addPlayer(Player player) {
 		players.put(player.getName(), player);
 	}
 
-	public void remove(Player player) {
+	public void removePlayer(Player player) {
 		players.remove(player.getName());
 	}
 
-	public boolean isSpectator(String name) {
-		return spectators.containsKey(name);
+	public boolean isSpectator(Player player) {
+		return spectators.containsKey(player.getName());
 	}
 
 	public void addSpectator(Player player) {
 		spectators.put(player.getName(), player);
 	}
 
-	public void removeSpecator(String name) {
-		spectators.remove(name);
+	public void removeSpecator(Player player) {
+		spectators.remove(player);
 	}
 
 	public Collection<Player> getSpectators() {

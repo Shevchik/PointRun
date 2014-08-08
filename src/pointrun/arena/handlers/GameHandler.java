@@ -96,9 +96,9 @@ public class GameHandler {
 				@Override
 				public void run() {
 					// check if countdown should be stopped for some various reasons
-					if (arena.getPlayersManager().getCount() < arena.getStructureManager().getMinPlayers()) {
+					if (arena.getPlayersManager().getPlayersCount() < arena.getStructureManager().getMinPlayers()) {
 						for (Player player : arena.getPlayersManager().getPlayers()) {
-							Bars.setBar(player, Bars.waiting, arena.getPlayersManager().getCount(), 0, arena.getPlayersManager().getCount() * 100 / arena.getStructureManager().getMinPlayers());
+							Bars.setBar(player, Bars.waiting, arena.getPlayersManager().getPlayersCount(), 0, arena.getPlayersManager().getPlayersCount() * 100 / arena.getStructureManager().getMinPlayers());
 						}
 						stopArenaCountdown();
 					} else
@@ -167,7 +167,7 @@ public class GameHandler {
 				@Override
 				public void run() {
 					// finish game if player count is 0
-					if (arena.getPlayersManager().getCount() == 0) {
+					if (arena.getPlayersManager().getPlayersCount() == 0) {
 						finishGame();
 						return;
 					}
@@ -181,7 +181,7 @@ public class GameHandler {
 					// handle players
 					for (Player player : arena.getPlayersManager().getPlayersCopy()) {
 						// update bar
-						Bars.setBar(player, Bars.playing, arena.getPlayersManager().getCount(), timelimit / 20, timelimit * 5 / arena.getStructureManager().getTimeLimit());
+						Bars.setBar(player, Bars.playing, arena.getPlayersManager().getPlayersCount(), timelimit / 20, timelimit * 5 / arena.getStructureManager().getTimeLimit());
 						// update scoreboard
 						Scoreboards.updateScoreboard(player, playerpoints);
 						// handle player
@@ -190,7 +190,7 @@ public class GameHandler {
 					// update bars and scoreboard for spectators too
 					for (Player player : arena.getPlayersManager().getSpectators()) {
 						// update bar
-						Bars.setBar(player, Bars.playing, arena.getPlayersManager().getCount(), timelimit / 20, timelimit * 5 / arena.getStructureManager().getTimeLimit());
+						Bars.setBar(player, Bars.playing, arena.getPlayersManager().getPlayersCount(), timelimit / 20, timelimit * 5 / arena.getStructureManager().getTimeLimit());
 						// update scoreboard
 						Scoreboards.updateScoreboard(player, playerpoints);
 					}
