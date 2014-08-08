@@ -27,7 +27,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import pointrun.PointRun;
+import pointrun.commands.setup.arena.AddCommandsRewards;
 import pointrun.commands.setup.arena.AddKit;
+import pointrun.commands.setup.arena.ClearCommandsRewards;
 import pointrun.commands.setup.arena.CreateArena;
 import pointrun.commands.setup.arena.DeleteArena;
 import pointrun.commands.setup.arena.DeleteKit;
@@ -85,6 +87,8 @@ public class SetupCommandsHandler implements CommandExecutor {
 		commandHandlers.put("setcountdown", new SetCountdown(plugin));
 		commandHandlers.put("setitemsrewards", new SetItemsRewards(plugin));
 		commandHandlers.put("setmoneyrewards", new SetMoneyRewards(plugin));
+		commandHandlers.put("addcommandrewards", new AddCommandsRewards(plugin));
+		commandHandlers.put("clearcommandrewards", new ClearCommandsRewards(plugin));
 		commandHandlers.put("addkit", new AddKit(plugin));
 		commandHandlers.put("deleteKit", new DeleteKit(plugin));
 		commandHandlers.put("settimelimit", new SetTimeLimit(plugin));
