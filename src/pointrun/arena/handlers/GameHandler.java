@@ -63,14 +63,16 @@ public class GameHandler {
 			new Runnable() {
 				@Override
 				public void run() {
+					// move player to spectators if he left arena bounds
 					for (Player player : arena.getPlayersManager().getPlayersCopy()) {
 						if (!arena.getStructureManager().isInArenaBounds(player.getLocation())) {
-							arena.getPlayerHandler().leavePlayer(player, Messages.playerlefttoplayer, Messages.playerlefttoothers);
+							arena.getPlayerHandler().spectatePlayer(player, Messages.playerlefttoplayer, Messages.playerlefttoothers);
 						}
 					}
+					// move spectator back to spectators spawn point if he left arena bounds
 					for (Player player : arena.getPlayersManager().getSpectatorsCopy()) {
 						if (!arena.getStructureManager().isInArenaBounds(player.getLocation())) {
-							arena.getPlayerHandler().leavePlayer(player, "", "");
+							player.teleport(arena.getStructureManager().getSpectatorSpawn());
 						}
 					}
 				}
@@ -197,6 +199,11 @@ public class GameHandler {
 						Bars.setBar(player, Bars.playing, arena.getPlayersManager().getPlayersCount(), timelimit / 20, timelimit * 5 / arena.getStructureManager().getTimeLimit());
 						// update scoreboard
 						Scoreboards.updateScoreboard(player, sboardmap);
+						// update flying status in case	something disabled it
+						if (!player.getAllowFlight() && !player.isFlying()) {
+							player.setAllowFlight(true);
+							player.setFlying(true);
+						}
 					}
 					// decrease timelimit
 					timelimit--;
