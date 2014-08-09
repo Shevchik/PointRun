@@ -83,7 +83,7 @@ public class GameZone {
 				}
 			}
 		}
-		return -1;
+		return 0;
 	}
 
 	private static double PLAYER_BOUNDINGBOX_ADD = 0.3;

@@ -231,7 +231,7 @@ public class GameHandler {
 		Location plufloc = plloc.clone().add(0, -1, 0);
 		// remove block under player feet
 		int points = arena.getStructureManager().getGameZone().destroyBlock(plufloc, arena);
-		if (points != -1) {
+		if (points != 0) {
 			getPlayerPoints(player).modifyPoints(points);
 			player.playSound(plloc, Sound.ORB_PICKUP, 1, 1);
 		}
