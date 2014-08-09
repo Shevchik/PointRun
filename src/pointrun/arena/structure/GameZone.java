@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -28,6 +29,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.util.NumberConversions;
 
 import pointrun.PointRun;
@@ -47,6 +50,10 @@ public class GameZone {
 
 	public void addMaterialWorlth(Material mat, int worth) {
 		materialworth.put(mat, worth);
+	}
+
+	public void removeMaterialWorth(Material mat) {
+		materialworth.remove(mat);
 	}
 
 	private HashSet<Block> blockstodestroy = new HashSet<Block>();
@@ -162,6 +169,25 @@ public class GameZone {
 			return world.getBlockAt(NumberConversions.floor(x + addx), y, NumberConversions.floor(z + addz));
 		}
 
+	}
+
+	public void saveToConfig(FileConfiguration config) {
+		for (Entry<Material, Integer> entry : materialworth.entrySet()) {
+			config.set("gamezone.materialworth."+entry.getKey().toString(), entry.getValue());
+		}
+	}
+
+	public void loadFromConfig(FileConfiguration config) {
+		ConfigurationSection cs = config.getConfigurationSection("gamezone.materialworth");
+		if (cs != null) {
+			materialworth.clear();
+			for (String key : cs.getKeys(false)) {
+				Material mat = Material.getMaterial(key);
+				if (mat != null) {
+					materialworth.put(mat, cs.getInt(key, 0));
+				}
+			}
+		}
 	}
 
 }

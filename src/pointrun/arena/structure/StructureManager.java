@@ -294,6 +294,8 @@ public class StructureManager {
 			config.set("spectatorspawn", spectatorspawn);
 		} catch (Exception e) {
 		}
+		// save gamezone
+		gamezone.saveToConfig(config);
 		// save maxplayers
 		config.set("maxPlayers", maxPlayers);
 		// save minplayers
@@ -334,6 +336,8 @@ public class StructureManager {
 		spawnpoint = config.getVector("spawnpoint", null);
 		// load spectators spawn
 		spectatorspawn = config.getVector("spectatorspawn", null);
+		// load gamezone
+		gamezone.loadFromConfig(config);
 		// load maxplayers
 		maxPlayers = config.getInt("maxPlayers", maxPlayers);
 		// load minplayers
