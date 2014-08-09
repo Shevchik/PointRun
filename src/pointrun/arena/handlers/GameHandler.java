@@ -46,8 +46,8 @@ public class GameHandler {
 
 	private HashMap<UUID, PlayerPoints> playerpoints = new HashMap<UUID, PlayerPoints>();
 
-	public Integer getPlayerPoints(Player player) {
-		return playerpoints.get(player.getUniqueId()).getPoints();
+	public PlayerPoints getPlayerPoints(Player player) {
+		return playerpoints.get(player.getUniqueId());
 	}
 
 	public void removePlayerPoints(Player player) {
@@ -225,7 +225,7 @@ public class GameHandler {
 		// remove block under player feet
 		int points = arena.getStructureManager().getGameZone().destroyBlock(plufloc, arena);
 		if (points != -1) {
-			playerpoints.get(player.getName()).modifyPoints(points);
+			getPlayerPoints(player).modifyPoints(points);
 			player.playSound(plloc, Sound.ORB_PICKUP, 1, 1);
 		}
 		// check for lose
@@ -241,9 +241,9 @@ public class GameHandler {
 		HashSet<Player> allplayers = arena.getPlayersManager().getAllParticipantsCopy();
 		if (!allplayers.isEmpty()) {
 			Player winner = allplayers.iterator().next();
-			int max = playerpoints.get(winner.getName()).getPoints();
+			int max = getPlayerPoints(winner).getPoints();
 			for (Player spectator : allplayers) {
-				int spoints = playerpoints.get(spectator.getName()).getPoints();
+				int spoints = getPlayerPoints(spectator).getPoints();
 				if (spoints > max) {
 					max = spoints;
 					winner = spectator;
