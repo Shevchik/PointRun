@@ -22,6 +22,8 @@ import java.util.HashSet;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import pointrun.arena.Arena;
 import pointrun.arena.structure.StructureManager.TeleportDestination;
@@ -86,6 +88,8 @@ public class PlayerHandler {
 		arena.plugin.pdata.storePlayerHunger(player);
 		// update inventory
 		player.updateInventory();
+		// add mining fatigue effect so player won't even attempt to break blocks
+		player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Integer.MAX_VALUE, 5));
 		// send message to player
 		Messages.sendMessage(player, msgtoplayer);
 		// send message to other players
@@ -176,6 +180,10 @@ public class PlayerHandler {
 
 	@SuppressWarnings("deprecation")
 	private void removePlayerFromArenaAndRestoreState(Player player, boolean winner) {
+		// remove all potion effects
+		for (PotionEffect effect : player.getActivePotionEffects()) {
+			player.removePotionEffect(effect.getType());
+		}
 		// reset spectators
 		if (arena.getPlayersManager().isSpectator(player)) {
 			arena.getPlayersManager().removeSpecator(player);
