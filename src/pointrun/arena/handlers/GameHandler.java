@@ -70,7 +70,7 @@ public class GameHandler {
 						}
 					}
 					// move spectator back to spectators spawn point if he left arena bounds
-					for (Player player : arena.getPlayersManager().getSpectatorsCopy()) {
+					for (Player player : arena.getPlayersManager().getSpectators()) {
 						if (!arena.getStructureManager().isInArenaBounds(player.getLocation())) {
 							player.teleport(arena.getStructureManager().getSpectatorSpawn());
 						}
