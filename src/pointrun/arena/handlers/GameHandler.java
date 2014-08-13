@@ -41,7 +41,6 @@ public class GameHandler {
 
 	public GameHandler(Arena arena) {
 		this.arena = arena;
-		count = arena.getStructureManager().getCountdown();
 	}
 
 	private HashMap<UUID, PlayerPoints> playerpoints = new HashMap<UUID, PlayerPoints>();
@@ -86,11 +85,15 @@ public class GameHandler {
 	}
 
 	// arena start handler (running status updater)
-	int runtaskid;
-	int count;
+	private int runtaskid;
+	private int count;
 
 	public void runArenaCountdown() {
+		//load countdown
+		count = arena.getStructureManager().getCountdown();
+		//set starting status
 		arena.getStatusManager().setStarting(true);
+		//run task
 		runtaskid = Bukkit.getScheduler().scheduleSyncRepeatingTask(
 			arena.plugin,
 			new Runnable() {
@@ -126,7 +129,6 @@ public class GameHandler {
 
 	public void stopArenaCountdown() {
 		arena.getStatusManager().setStarting(false);
-		count = arena.getStructureManager().getCountdown();
 		Bukkit.getScheduler().cancelTask(runtaskid);
 	}
 
