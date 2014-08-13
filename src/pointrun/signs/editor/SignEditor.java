@@ -133,8 +133,6 @@ public class SignEditor {
 					Sign sign = (Sign) block.getState();
 					sign.setLine(3, text);
 					sign.update();
-				} else {
-					removeSign(block, arenaname);
 				}
 			}
 		} catch (Exception e) {
