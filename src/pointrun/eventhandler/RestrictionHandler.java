@@ -45,7 +45,7 @@ public class RestrictionHandler implements Listener {
 	);
 
 	// player should not be able to issue any commands besides /pr leave and /pr vote while in arena
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onPlayerCommand(PlayerCommandPreprocessEvent e) {
 		Player player = e.getPlayer();
 		Arena arena = plugin.amanager.getPlayerArena(player);
@@ -64,7 +64,7 @@ public class RestrictionHandler implements Listener {
 	}
 
 	// player should not be able to break blocks while in arena
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onPlayerBlockBreak(BlockBreakEvent e) {
 		Player player = e.getPlayer();
 		Arena arena = plugin.amanager.getPlayerArena(player);
@@ -76,7 +76,7 @@ public class RestrictionHandler implements Listener {
 	}
 
 	// player should not be able to place blocks while in arena
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onPlayerBlockPlace(BlockPlaceEvent e) {
 		Player player = e.getPlayer();
 		Arena arena = plugin.amanager.getPlayerArena(player);
@@ -88,7 +88,7 @@ public class RestrictionHandler implements Listener {
 	}
 
 	//player is not able to drop items while in arena
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onPlayerItemDrop(PlayerDropItemEvent e) {
 		Player player = e.getPlayer();
 		Arena arena = plugin.amanager.getPlayerArena(player);
