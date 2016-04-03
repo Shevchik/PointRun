@@ -23,11 +23,11 @@ import java.io.IOException;
 import me.confuser.barapi.BarAPI;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import pointrun.FormattingCodesParser;
 import pointrun.PointRun;
 
 public class Bars {
@@ -39,7 +39,7 @@ public class Bars {
 	public static void setBar(Player player, String message, int count, int seconds, float percent) {
 		message = message.replace("{COUNT}", String.valueOf(count));
 		message = message.replace("{SECONDS}", String.valueOf(seconds));
-		message = FormattingCodesParser.parseFormattingCodes(message);
+		message = ChatColor.translateAlternateColorCodes('&', message);
 		if (Bukkit.getPluginManager().getPlugin("BarAPI") != null) {
 			if (!message.equals("")) {
 				BarAPI.setMessage(player, message, percent);

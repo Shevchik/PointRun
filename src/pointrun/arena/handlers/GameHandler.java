@@ -235,7 +235,7 @@ public class GameHandler {
 		int points = arena.getStructureManager().getGameZone().destroyBlock(plufloc, arena);
 		if (points != 0) {
 			getPlayerPoints(player).modifyPoints(points);
-			player.playSound(plloc, Sound.ORB_PICKUP, 1, 1);
+			player.playSound(plloc, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
 		}
 		// check for lose
 		if (arena.getStructureManager().getLoseLevel().isLooseLocation(plloc)) {
