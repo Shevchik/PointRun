@@ -116,7 +116,7 @@ public class GameZone {
 		return null;
 	}
 
-	private ArrayList<BlockState> blocks = new ArrayList<BlockState>();
+	private final ArrayList<BlockState> blocks = new ArrayList<BlockState>();
 
 	private void removeGLBlocks(Block block) {
 		blocks.add(block.getState());

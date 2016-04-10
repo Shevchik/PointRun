@@ -69,7 +69,6 @@ public class PlayerHandler {
 	}
 
 	// spawn player on arena
-	@SuppressWarnings("deprecation")
 	public void spawnPlayer(final Player player, String msgtoplayer, String msgtoarenaplayers) {
 		// teleport player to arena
 		arena.plugin.pdata.storePlayerLocation(player);
@@ -83,7 +82,6 @@ public class PlayerHandler {
 		player.setFlying(false);
 		player.setAllowFlight(false);
 		arena.plugin.pdata.storePlayerInventory(player);
-		arena.plugin.pdata.storePlayerArmor(player);
 		arena.plugin.pdata.storePlayerPotionEffects(player);
 		arena.plugin.pdata.storePlayerHunger(player);
 		// update inventory
@@ -178,7 +176,6 @@ public class PlayerHandler {
 		arena.plugin.signEditor.modifySigns(arena.getArenaName());
 	}
 
-	@SuppressWarnings("deprecation")
 	private void removePlayerFromArenaAndRestoreState(Player player, boolean winner) {
 		// remove all potion effects
 		for (PotionEffect effect : player.getActivePotionEffects()) {
@@ -206,7 +203,6 @@ public class PlayerHandler {
 		// restore player status
 		arena.plugin.pdata.restorePlayerHunger(player);
 		arena.plugin.pdata.restorePlayerPotionEffects(player);
-		arena.plugin.pdata.restorePlayerArmor(player);
 		arena.plugin.pdata.restorePlayerInventory(player);
 		// reward player before restoring gamemode if player is winner
 		if (winner) {
