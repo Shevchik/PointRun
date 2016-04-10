@@ -17,10 +17,10 @@
 
 package pointrun.arena.structure;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
@@ -38,7 +38,8 @@ import pointrun.arena.Arena;
 
 public class GameZone {
 
-	private HashMap<Material, Integer> materialworth = new HashMap<Material, Integer>(); {
+	private final EnumMap<Material, Integer> materialworth = new EnumMap<Material, Integer>(Material.class);
+	{
 		materialworth.put(Material.DIAMOND_ORE, 6);
 		materialworth.put(Material.EMERALD_ORE, 5);
 		materialworth.put(Material.REDSTONE_ORE, 4);
@@ -56,7 +57,7 @@ public class GameZone {
 		materialworth.remove(mat);
 	}
 
-	private HashSet<Block> blockstodestroy = new HashSet<Block>();
+	private final HashSet<Block> blockstodestroy = new HashSet<Block>();
 
 	private final int SCAN_DEPTH = 1;
 	public int destroyBlock(Location loc, final Arena arena) {
@@ -115,7 +116,7 @@ public class GameZone {
 		return null;
 	}
 
-	private LinkedList<BlockState> blocks = new LinkedList<BlockState>();
+	private ArrayList<BlockState> blocks = new ArrayList<BlockState>();
 
 	private void removeGLBlocks(Block block) {
 		blocks.add(block.getState());
@@ -123,12 +124,10 @@ public class GameZone {
 	}
 
 	public void regenNow() {
-		Iterator<BlockState> bsit = blocks.iterator();
-		while (bsit.hasNext()) {
-			BlockState bs = bsit.next();
+		for (BlockState bs : blocks) {
 			bs.update(true);
-			bsit.remove();
 		}
+		blocks.clear();
 	}
 
 	private final int MAX_BLOCKS_PER_TICK = 50;
